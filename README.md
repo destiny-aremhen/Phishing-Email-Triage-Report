@@ -33,15 +33,25 @@
   * **DMARC:** `PASS`
 * Extracted the `X-Originating-IP` header (`43[.]255[.]56[.]161`). Geolocation trace confirmed the IP belongs to legitimate partner infrastructure.
 
+![IP Geolocation Result](images/ip-geolocation.png)
+
 ### Step 2: Artifact Extraction & Payload Analysis
 * Extracted the Base64-encoded payload string from the email body source code.
 * Utilized **CyberChef** (`From Base64`) to safely reconstruct the raw binary file stream in memory without executing it on the host system. Verified the magic byte header (`%PDF-1.6`).
+
+![Base64 Encoding](images/base64-encoding.png)
+![Cybechef Base64 Encoding](image/cyberchef-defanging1.png)
+
 * Applied cryptographic hashing (`SHA2` - 256) directly to the decoded file stream in CyberChef to obtain its unique file fingerprint.
+
+![Cryptographic Hash](images/cyberchef-defanging2.png)
 
 ### Step 3: Threat Intelligence Pivoting
 * Queried the computed SHA-256 hash on **VirusTotal**:
   * **Detection Ratio:** `0 / 62` engines flagged the file.
   * **Verdict:** Clean / Known Benign Document.
+
+![Virustotal Hash Analysis](images/virustotal-hash-check.png)
 
 ---
 
@@ -51,7 +61,7 @@
 | :--- | :--- | :--- |
 | **Sending IP** | `43[.]255[.]56[.]161` | Clean / Legitimate Partner Range |
 | **Sender Domain** | `ant[.]anki-tech[.]com` | Authenticated (SPF/DKIM/DMARC Pass) |
-| **Sender Email** | `newsletters[@]ant[.].anki-tech[.]com` | Valid Sender |
+| **Sender Email** | `newsletters[@]ant[.]anki-tech[.]com` | Valid Sender |
 | **Payload Hash (SHA-256)** | `7a8fbf5de792a20a2f3be994e041f34f9ca3f37e10d829f77bef94dfe7b77900` | Clean (0/62 Detections on VirusTotal) |
 
 ---
