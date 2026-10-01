@@ -40,7 +40,7 @@
 * Utilized **CyberChef** (`From Base64`) to safely reconstruct the raw binary file stream in memory without executing it on the host system. Verified the magic byte header (`%PDF-1.6`).
 
 ![Base64 Encoding](images/base64-encoding.png)
-![Cybechef Base64 Encoding](image/cyberchef-defanging1.png)
+![Cyberchef Base64 Encoding](images/cyberchef-defanging1.png)
 
 * Applied cryptographic hashing (`SHA2` - 256) directly to the decoded file stream in CyberChef to obtain its unique file fingerprint.
 
